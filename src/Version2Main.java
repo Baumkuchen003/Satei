@@ -3,9 +3,6 @@ import java.util.ArrayList;
 
 public class Version2Main {
     public static void main(String[] args) throws IOException {
-        /*int[] transactionPrices = {76000, 74000, 65000, 61000, 56000};
-        int[] propertySizes = {155, 85, 155, 135, 110};
-        int[] propertyAges = {2001, 2018, 2009, 2007, 2009};*/
 
         String targetSizeInput = IO.readln("あなたのお部屋のサイズは何㎡？ ");
         int targetSize = Integer.parseInt(targetSizeInput);
@@ -16,33 +13,21 @@ public class Version2Main {
         
         
         ArrayList<Property> properties = CsvReader.getProperties();
+        ArrayList<Property> suitableProperties = new ArrayList<>();
         for (int i = 0; i < properties.size(); i++) {
-        
-        double sizeDifferentScore = Math.abs(targetSize - properties.get(i).propertySizes) / (double) targetSize * 100 * 3;
-        double ageDifferentScore = Math.abs(targetBuiltYear - properties.get(i).propertyAges);
-        double calculatedSimilarity = 100 - (sizeDifferentScore + ageDifferentScore);
-        
-        properties.get(i).similarityScores = calculatedSimilarity;
-        
-        /*Property property = new Property();
-        property.transactionPrices = transactionPrices[i];
-        property.propertySizes = propertySizes[i];
-        property.propertyAges = propertyAges[i];
+            properties.get(i).calculatedSimilarity(targetSize, targetBuiltYear);
+            if (properties.get(i).similarityScores >= 50){
+            suitableProperties.add(properties.get(i));
+        }   
+    }
 
-        if (calculatedSimilarity >= 0){
-            property.similarityScores = calculatedSimilarity;
-            properties.add(property);
-            }
-        }*/
-        }
-
-        for (int t = 0; t < properties.size(); t++) {
-            for (int j = 0; j < properties.size() - 1 - t; j++) {
-            if (properties.get(j).similarityScores < properties.get(j + 1).similarityScores){
+        for (int t = 0; t < suitableProperties.size(); t++) {
+            for (int j = 0; j < suitableProperties.size() - 1 - t; j++) {
+            if (suitableProperties.get(j).similarityScores < properties.get(j + 1).similarityScores){
             
-                Property temp = properties.get(j); //temp は temporary の訳
-                properties.set(j, properties.get(j + 1));
-                properties.set(j + 1, temp);
+                Property temp = suitableProperties.get(j); //temp は temporary の訳
+                suitableProperties.set(j, suitableProperties.get(j + 1));
+                suitableProperties.set(j + 1, temp);
                 }
             }
         }
@@ -51,7 +36,7 @@ public class Version2Main {
         double sumSimilarityScores = 0.0;
         int numberOfSimilarProperties = 10;
         int similarPropertyCount = 0;
-        for (int k = 0; k < Math.min(numberOfSimilarProperties, properties.size()); k++) {
+        for (int k = 0; k < Math.min(numberOfSimilarProperties, suitableProperties.size()); k++) {
             System.out.println(properties.get(k).propertyInformation());
             sumSimilarProperties += properties.get(k).transactionPrices * properties.get(k).similarityScores;
             sumSimilarityScores += properties.get(k).similarityScores;
