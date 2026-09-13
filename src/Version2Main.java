@@ -4,11 +4,27 @@ import java.util.ArrayList;
 public class Version2Main {
     public static void main(String[] args) throws IOException {
 
-        String targetSizeInput = IO.readln("あなたのお部屋のサイズは何㎡？ ");
-        int targetSize = Integer.parseInt(targetSizeInput);
+        int targetSize;
+        while(true){
+            String targetSizeInput = IO.readln("あなたのお部屋のサイズは何㎡？ ");
+            try {
+                targetSize = Integer.parseInt(targetSizeInput);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("数字を入力してください");
+            }
+        }
 
-        String targetAgeInput = IO.readln("あなたのお部屋の築年数は何年？ ");
-        int targetAge = Integer.parseInt(targetAgeInput);
+        int targetAge;
+        while(true){
+            String targetAgeInput = IO.readln("あなたのお部屋の築年数は何年？ ");
+            try{
+                targetAge = Integer.parseInt(targetAgeInput);
+                break;
+            } catch (NumberFormatException e){
+                System.out.println("数字を入力してください");
+            }
+        }
         int targetBuiltYear = 2026 - targetAge;
         
         
@@ -23,7 +39,7 @@ public class Version2Main {
 
         for (int t = 0; t < suitableProperties.size(); t++) {
             for (int j = 0; j < suitableProperties.size() - 1 - t; j++) {
-            if (suitableProperties.get(j).similarityScores < properties.get(j + 1).similarityScores){
+            if (suitableProperties.get(j).similarityScores < suitableProperties.get(j + 1).similarityScores){
             
                 Property temp = suitableProperties.get(j); //temp は temporary の訳
                 suitableProperties.set(j, suitableProperties.get(j + 1));
@@ -34,12 +50,12 @@ public class Version2Main {
         
         double sumSimilarProperties = 0.0;
         double sumSimilarityScores = 0.0;
-        int numberOfSimilarProperties = 10;
+        int numberOfSimilarProperties = 5;
         int similarPropertyCount = 0;
         for (int k = 0; k < Math.min(numberOfSimilarProperties, suitableProperties.size()); k++) {
-            System.out.println(properties.get(k).propertyInformation());
-            sumSimilarProperties += properties.get(k).transactionPrices * properties.get(k).similarityScores;
-            sumSimilarityScores += properties.get(k).similarityScores;
+            System.out.println(suitableProperties.get(k).propertyInformation());
+            sumSimilarProperties += suitableProperties.get(k).transactionPrices * suitableProperties.get(k).similarityScores;
+            sumSimilarityScores += suitableProperties.get(k).similarityScores;
             similarPropertyCount++;
         }
         
