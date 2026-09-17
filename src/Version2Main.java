@@ -86,7 +86,7 @@ public class Version2Main {
                 System.out.println("価格：" + PriceFormatter.formatEstimatedPrice(suitableProperties.get(i).transactionPrices));
                 System.out.println("サイズ：" + suitableProperties.get(i).propertySizes+ "㎡");
                 System.out.println("築年：" + suitableProperties.get(i).propertyAges + "年");
-                System.out.println("類似度：" + String.format("%.2f", suitableProperties.get(i).similarityScores) + "pt");
+                System.out.println("類似度：" + String.format("%.2f", suitableProperties.get(i).similarityScores));
             }
     }
 }
