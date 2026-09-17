@@ -6,9 +6,9 @@ public class PriceFormatter {
         int hundredMan = hundredManUnit * 100;
 
         if (estimatedPrice < 10000){
-                return String.format("約%d万円%n", hundredMan);
+                return String.format("%d万円%n", hundredMan);
             }else{
-                return String.format("約%d億%d万円", oku, hundredMan);
+                return String.format("%d億%d万円", oku, hundredMan);
             }
     }
 }
